@@ -1,4 +1,7 @@
 jdk:
     - openjdk17
+
+before_install:
+    - chmod +x mvnw
 install:
-    - mvn clean install -DskipTests -DskipITs -Dmaven.javadoc.skip=true -Dgpg.skip
+    - ./mvnw clean install -DskipTests -DskipITs -Dmaven.javadoc.skip=true -Dgpg.skip
