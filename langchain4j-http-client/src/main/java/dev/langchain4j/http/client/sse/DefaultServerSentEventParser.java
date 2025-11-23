@@ -23,7 +23,7 @@ public class DefaultServerSentEventParser implements ServerSentEventParser {
             String line;
             while (!parsingHandle.isCancelled() && (line = reader.readLine()) != null) {
                 if (line.isEmpty()) {
-                    if (!data.isEmpty()) {
+                    if (data.length() != 0) {
                         ServerSentEvent sse = new ServerSentEvent(event, data.toString());
                         ignoringExceptions(() -> listener.onEvent(sse, context));
                         event = null;
@@ -36,14 +36,14 @@ public class DefaultServerSentEventParser implements ServerSentEventParser {
                     event = line.substring("event:".length()).trim();
                 } else if (line.startsWith("data:")) {
                     String content = line.substring("data:".length());
-                    if (!data.isEmpty()) {
+                    if (data.length() != 0) {
                         data.append("\n");
                     }
                     data.append(content.trim());
                 }
             }
 
-            if (!parsingHandle.isCancelled() && !data.isEmpty()) {
+            if (!parsingHandle.isCancelled() && data.length() != 0) {
                 ServerSentEvent sse = new ServerSentEvent(event, data.toString());
                 ignoringExceptions(() -> listener.onEvent(sse, context));
             }
