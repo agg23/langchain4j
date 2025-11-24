@@ -157,8 +157,14 @@ public class OpenAiStreamingResponseBuilder {
         if (delta.toolCalls() != null && !delta.toolCalls().isEmpty()) {
             ToolCall toolCall = delta.toolCalls().get(0);
 
+            Integer index = toolCall.index();
+            // Stubbed Gemini API may not provide index
+            if (index == null) {
+                index = 0; 
+            }
+
             ToolExecutionRequestBuilder builder = this.indexToToolExecutionRequestBuilder.computeIfAbsent(
-                    toolCall.index(), idx -> new ToolExecutionRequestBuilder());
+                    index, idx -> new ToolExecutionRequestBuilder());
 
             if (toolCall.id() != null) {
                 builder.idBuilder.append(toolCall.id());
