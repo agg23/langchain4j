@@ -204,6 +204,10 @@ public class OpenAiStreamingChatModel implements StreamingChatModel {
             for (ToolCall toolCall : toolCalls) {
 
                 int index = toolCall.index();
+                // Stubbed Gemini API may not provide index
+                if (index == null) {
+                    index = 0; 
+                }
                 if (toolCallBuilder.index() != index) {
                     onCompleteToolCall(handler, toolCallBuilder.buildAndReset());
                     toolCallBuilder.updateIndex(index);
