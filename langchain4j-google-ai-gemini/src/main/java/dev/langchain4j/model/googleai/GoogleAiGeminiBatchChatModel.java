@@ -148,7 +148,7 @@ public final class GoogleAiGeminiBatchChatModel extends BaseGeminiChatModel {
                 .map(this::createGenerateContentRequest)
                 // Wrap them in InlinedRequest, ready for batching.
                 .map(request -> new InlinedRequest(request, Map.of()))
-                .toList();
+                .collect(Collectors.toList());
         var request = new BatchGenerateContentRequest(
                 new Batch(displayName, new InputConfig(new Requests(inlineRequests)), getOrDefault(priority, 0L)));
 
@@ -219,7 +219,7 @@ public final class GoogleAiGeminiBatchChatModel extends BaseGeminiChatModel {
         var response = geminiService.batchListBatches(pageSize, pageToken);
         return new BatchList(
                 response.nextPageToken(),
-                response.operations().stream().map(this::processResponse).toList());
+                response.operations().stream().map(this::processResponse).collect(Collectors.toList()));
     }
 
     private ChatRequest applyDefaultParameters(ChatRequest chatRequest) {
@@ -267,7 +267,7 @@ public final class GoogleAiGeminiBatchChatModel extends BaseGeminiChatModel {
         return response.inlinedResponses().inlinedResponses().stream()
                 .map(BatchGenerateContentResponse.InlinedResponseWrapper::response)
                 .map(this::processResponse)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     private BatchJobState extractBatchState(Map<String, Object> metadata) {

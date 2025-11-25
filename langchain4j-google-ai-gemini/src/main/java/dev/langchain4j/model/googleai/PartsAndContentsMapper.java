@@ -283,7 +283,7 @@ final class PartsAndContentsMapper {
                             return new GeminiContent(
                                     userMessage.contents().stream()
                                             .map(PartsAndContentsMapper::fromContentToGPart)
-                                            .toList(),
+                                            .collect(Collectors.toList()),
                                     GeminiRole.USER.toString());
                         case TOOL_EXECUTION_RESULT:
                             ToolExecutionResultMessage toolResultMessage = (ToolExecutionResultMessage) msg;
@@ -300,7 +300,7 @@ final class PartsAndContentsMapper {
                     }
                 })
                 .filter(Objects::nonNull)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     private static List<GeminiContent.GeminiPart> toGeminiParts(

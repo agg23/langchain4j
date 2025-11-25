@@ -91,7 +91,7 @@ public class GoogleAiEmbeddingModel extends DimensionAwareEmbeddingModel {
 
             allEmbeddings.addAll(geminiResponse.embeddings().stream()
                     .map(values -> Embedding.from(values.values()))
-                    .toList());
+                    .collect(Collectors.toList()));
         }
 
         return Response.from(allEmbeddings);

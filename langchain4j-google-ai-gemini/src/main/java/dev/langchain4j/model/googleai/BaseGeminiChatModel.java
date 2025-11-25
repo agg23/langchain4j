@@ -358,7 +358,7 @@ class BaseGeminiChatModel {
         public B safetySettings(Map<GeminiHarmCategory, GeminiHarmBlockThreshold> safetySettingMap) {
             this.safetySettings = safetySettingMap.entrySet().stream()
                     .map(entry -> new GeminiSafetySetting(entry.getKey(), entry.getValue()))
-                    .toList();
+                    .collect(Collectors.toList());
             return builder();
         }
 

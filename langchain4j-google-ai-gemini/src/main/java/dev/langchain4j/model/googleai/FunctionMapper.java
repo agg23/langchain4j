@@ -40,7 +40,7 @@ class FunctionMapper {
                     return fnBuilder.build();
                 })
                 .filter(Objects::nonNull)
-                .toList();
+                .collect(Collectors.toList());
 
         return new GeminiTool(
                 functionDeclarations.isEmpty() ? null : functionDeclarations,
@@ -53,6 +53,6 @@ class FunctionMapper {
                         .name(functionCall.name())
                         .arguments(toJsonWithoutIndent(functionCall.args()))
                         .build())
-                .toList();
+                .collect(Collectors.toList());
     }
 }
