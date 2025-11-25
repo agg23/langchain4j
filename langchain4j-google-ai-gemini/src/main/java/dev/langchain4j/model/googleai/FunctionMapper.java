@@ -11,6 +11,7 @@ import dev.langchain4j.model.googleai.GeminiGenerateContentRequest.GeminiTool;
 import dev.langchain4j.model.googleai.GeminiGenerateContentRequest.GeminiTool.GeminiCodeExecution;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 class FunctionMapper {
     static GeminiTool fromToolSepcsToGTool(List<ToolSpecification> specifications, boolean allowCodeExecution) {
