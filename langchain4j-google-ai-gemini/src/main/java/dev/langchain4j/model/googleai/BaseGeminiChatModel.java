@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import org.slf4j.Logger;
+import java.util.stream.Collectors;
 
 class BaseGeminiChatModel {
     protected final GeminiService geminiService;
@@ -315,7 +316,7 @@ class BaseGeminiChatModel {
         public B safetySettings(Map<GeminiHarmCategory, GeminiHarmBlockThreshold> safetySettingMap) {
             this.safetySettings = safetySettingMap.entrySet().stream()
                     .map(entry -> new GeminiSafetySetting(entry.getKey(), entry.getValue()))
-                    .toList();
+                    .collect(Collectors.toList());
             return builder();
         }
 
