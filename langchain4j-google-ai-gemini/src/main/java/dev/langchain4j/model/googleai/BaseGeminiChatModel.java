@@ -31,6 +31,10 @@ class BaseGeminiChatModel {
     protected final GeminiFunctionCallingConfig functionCallingConfig;
     protected final boolean allowCodeExecution;
     protected final boolean includeCodeExecutionOutput;
+    protected final boolean allowGoogleSearch;
+    protected final GeminiInterval googleSearchTimeRange;
+    protected final boolean allowGoogleMaps;
+    protected final boolean enableGoogleMapsWidget;
     protected final List<GeminiSafetySetting> safetySettings;
     protected final List<ChatModelListener> listeners;
     protected final GeminiThinkingConfig thinkingConfig;
@@ -50,6 +54,10 @@ class BaseGeminiChatModel {
         this.functionCallingConfig = builder.functionCallingConfig;
         this.allowCodeExecution = getOrDefault(builder.allowCodeExecution, false);
         this.includeCodeExecutionOutput = getOrDefault(builder.includeCodeExecutionOutput, false);
+        this.allowGoogleSearch = getOrDefault(builder.allowGoogleSearch, false);
+        this.googleSearchTimeRange = builder.googleSearchTimeRange;
+        this.allowGoogleMaps = getOrDefault(builder.allowGoogleMaps, false);
+        this.enableGoogleMapsWidget = getOrDefault(builder.enableGoogleMapsWidget, false);
         this.safetySettings = copyIfNotNull(builder.safetySettings);
         this.listeners = copy(builder.listeners);
         this.thinkingConfig = builder.thinkingConfig;
@@ -127,7 +135,9 @@ class BaseGeminiChatModel {
                         .thinkingConfig(this.thinkingConfig)
                         .build())
                 .safetySettings(this.safetySettings)
-                .tools(fromToolSepcsToGTool(chatRequest.toolSpecifications(), this.allowCodeExecution))
+                .tools(fromToolSepcsToGTool(chatRequest.toolSpecifications(), this.allowCodeExecution, 
+                        this.allowGoogleSearch, this.googleSearchTimeRange, 
+                        this.allowGoogleMaps, this.enableGoogleMapsWidget))
                 .toolConfig(toToolConfig(parameters.toolChoice(), this.functionCallingConfig))
                 .build();
     }
@@ -209,6 +219,10 @@ class BaseGeminiChatModel {
         protected GeminiFunctionCallingConfig functionCallingConfig;
         protected Boolean allowCodeExecution;
         protected Boolean includeCodeExecutionOutput;
+        protected Boolean allowGoogleSearch;
+        protected GeminiInterval googleSearchTimeRange;
+        protected Boolean allowGoogleMaps;
+        protected Boolean enableGoogleMapsWidget;
         protected Boolean logRequestsAndResponses;
         protected Boolean logRequests;
         protected Boolean logResponses;
@@ -442,6 +456,47 @@ class BaseGeminiChatModel {
          */
         public B allowCodeExecution(Boolean allowCodeExecution) {
             this.allowCodeExecution = allowCodeExecution;
+            return builder();
+        }
+
+        /**
+         * Enabled <a href="https://ai.google.dev/gemini-api/docs/google-search">Google Search grounding tool</a> in Gemini.
+         */
+        public B allowGoogleSearch(Boolean allowGoogleSearch) {
+            this.allowGoogleSearch = allowGoogleSearch;
+            return builder();
+        }
+
+        /**
+         * Sets a time range filter for Google Search results. Only valid when allowGoogleSearch is true.
+         * 
+         * @param timeRange the time interval to filter search results
+         * @see #allowGoogleSearch(Boolean)
+         */
+        public B googleSearchTimeRange(GeminiInterval timeRange) {
+            this.googleSearchTimeRange = timeRange;
+            return builder();
+        }
+
+        /**
+         * Enabled <a href="https://ai.google.dev/gemini-api/docs/maps-grounding">Google Maps grounding tool</a> in Gemini.
+         * 
+         * @see #enableGoogleMapsWidget(Boolean)
+         */
+        public B allowGoogleMaps(Boolean allowGoogleMaps) {
+            this.allowGoogleMaps = allowGoogleMaps;
+            return builder();
+        }
+
+        /**
+         * When enabled, the model will return a widget context token in the GroundingMetadata.
+         * 
+         * TODO: The full implementation of parsing and exposing the widget context token has not been built.
+         * 
+         * @see #allowGoogleMaps(Boolean)
+         */
+        public B enableGoogleMapsWidget(Boolean enableGoogleMapsWidget) {
+            this.enableGoogleMapsWidget = enableGoogleMapsWidget;
             return builder();
         }
 

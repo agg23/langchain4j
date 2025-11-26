@@ -14,19 +14,39 @@ import static dev.langchain4j.model.googleai.SchemaMapper.fromJsonSchemaToGSchem
 
 class FunctionMapper {
 
-    static GeminiTool fromToolSepcsToGTool(List<ToolSpecification> specifications, boolean allowCodeExecution) {
+    static GeminiTool fromToolSepcsToGTool(List<ToolSpecification> specifications, 
+                                           boolean allowCodeExecution,
+                                           boolean allowGoogleSearch,
+                                           GeminiInterval googleSearchTimeRange,
+                                           boolean allowGoogleMaps,
+                                           boolean enableGoogleMapsWidget) {
 
         GeminiTool.GeminiToolBuilder tool = GeminiTool.builder();
 
         if (allowCodeExecution) {
             tool.codeExecution(new GeminiCodeExecution());
         }
+        
+        if (allowGoogleSearch) {
+            GeminiGoogleSearch googleSearch = googleSearchTimeRange != null 
+                ? GeminiGoogleSearch.builder().timeRangeFilter(googleSearchTimeRange).build()
+                : new GeminiGoogleSearch();
+            tool.googleSearch(googleSearch);
+        }
+        
+        if (allowGoogleMaps) {
+            GeminiGoogleMaps googleMaps = enableGoogleMapsWidget 
+                ? GeminiGoogleMaps.builder().enableWidget(true).build()
+                : new GeminiGoogleMaps();
+            tool.googleMaps(googleMaps);
+        }
+        
         if (isNullOrEmpty(specifications)) {
-            if (allowCodeExecution) {
-                // if there's no tool specification, but there's Python code execution
+            if (allowCodeExecution || allowGoogleSearch || allowGoogleMaps) {
+                // if there's no tool specification, but there's an implicit API tool enabled
                 return tool.build();
             } else {
-                // if there's neither tool specification nor Python code execution
+                // if there's neither tool specification nor any implicit API tool enabled
                 return null;
             }
         }

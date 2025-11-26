@@ -10,11 +10,18 @@ import java.util.List;
 class GeminiTool {
     private List<GeminiFunctionDeclaration> functionDeclarations;
     private GeminiCodeExecution codeExecution;
+    private GeminiGoogleSearch googleSearch;
+    private GeminiGoogleMaps googleMaps;
 
     @JsonCreator
-    GeminiTool(@JsonProperty("functionDeclarations") List<GeminiFunctionDeclaration> functionDeclarations, @JsonProperty("codeExecution") GeminiCodeExecution codeExecution) {
+    GeminiTool(@JsonProperty("functionDeclarations") List<GeminiFunctionDeclaration> functionDeclarations, 
+               @JsonProperty("codeExecution") GeminiCodeExecution codeExecution,
+               @JsonProperty("googleSearch") GeminiGoogleSearch googleSearch,
+               @JsonProperty("googleMaps") GeminiGoogleMaps googleMaps) {
         this.functionDeclarations = functionDeclarations;
         this.codeExecution = codeExecution;
+        this.googleSearch = googleSearch;
+        this.googleMaps = googleMaps;
     }
 
     public static GeminiToolBuilder builder() {
@@ -29,12 +36,28 @@ class GeminiTool {
         return this.codeExecution;
     }
 
+    public GeminiGoogleSearch getGoogleSearch() {
+        return this.googleSearch;
+    }
+
+    public GeminiGoogleMaps getGoogleMaps() {
+        return this.googleMaps;
+    }
+
     public void setFunctionDeclarations(List<GeminiFunctionDeclaration> functionDeclarations) {
         this.functionDeclarations = functionDeclarations;
     }
 
     public void setCodeExecution(GeminiCodeExecution codeExecution) {
         this.codeExecution = codeExecution;
+    }
+
+    public void setGoogleSearch(GeminiGoogleSearch googleSearch) {
+        this.googleSearch = googleSearch;
+    }
+
+    public void setGoogleMaps(GeminiGoogleMaps googleMaps) {
+        this.googleMaps = googleMaps;
     }
 
     public boolean equals(final Object o) {
@@ -50,6 +73,14 @@ class GeminiTool {
         final Object other$codeExecution = other.getCodeExecution();
         if (this$codeExecution == null ? other$codeExecution != null : !this$codeExecution.equals(other$codeExecution))
             return false;
+        final Object this$googleSearch = this.getGoogleSearch();
+        final Object other$googleSearch = other.getGoogleSearch();
+        if (this$googleSearch == null ? other$googleSearch != null : !this$googleSearch.equals(other$googleSearch))
+            return false;
+        final Object this$googleMaps = this.getGoogleMaps();
+        final Object other$googleMaps = other.getGoogleMaps();
+        if (this$googleMaps == null ? other$googleMaps != null : !this$googleMaps.equals(other$googleMaps))
+            return false;
         return true;
     }
 
@@ -64,16 +95,22 @@ class GeminiTool {
         result = result * PRIME + ($functionDeclarations == null ? 43 : $functionDeclarations.hashCode());
         final Object $codeExecution = this.getCodeExecution();
         result = result * PRIME + ($codeExecution == null ? 43 : $codeExecution.hashCode());
+        final Object $googleSearch = this.getGoogleSearch();
+        result = result * PRIME + ($googleSearch == null ? 43 : $googleSearch.hashCode());
+        final Object $googleMaps = this.getGoogleMaps();
+        result = result * PRIME + ($googleMaps == null ? 43 : $googleMaps.hashCode());
         return result;
     }
 
     public String toString() {
-        return "GeminiTool(functionDeclarations=" + this.getFunctionDeclarations() + ", codeExecution=" + this.getCodeExecution() + ")";
+        return "GeminiTool(functionDeclarations=" + this.getFunctionDeclarations() + ", codeExecution=" + this.getCodeExecution() + ", googleSearch=" + this.getGoogleSearch() + ", googleMaps=" + this.getGoogleMaps() + ")";
     }
 
     public static class GeminiToolBuilder {
         private List<GeminiFunctionDeclaration> functionDeclarations;
         private GeminiCodeExecution codeExecution;
+        private GeminiGoogleSearch googleSearch;
+        private GeminiGoogleMaps googleMaps;
 
         GeminiToolBuilder() {
         }
@@ -88,12 +125,22 @@ class GeminiTool {
             return this;
         }
 
+        public GeminiToolBuilder googleSearch(GeminiGoogleSearch googleSearch) {
+            this.googleSearch = googleSearch;
+            return this;
+        }
+
+        public GeminiToolBuilder googleMaps(GeminiGoogleMaps googleMaps) {
+            this.googleMaps = googleMaps;
+            return this;
+        }
+
         public GeminiTool build() {
-            return new GeminiTool(this.functionDeclarations, this.codeExecution);
+            return new GeminiTool(this.functionDeclarations, this.codeExecution, this.googleSearch, this.googleMaps);
         }
 
         public String toString() {
-            return "GeminiTool.GeminiToolBuilder(functionDeclarations=" + this.functionDeclarations + ", codeExecution=" + this.codeExecution + ")";
+            return "GeminiTool.GeminiToolBuilder(functionDeclarations=" + this.functionDeclarations + ", codeExecution=" + this.codeExecution + ", googleSearch=" + this.googleSearch + ", googleMaps=" + this.googleMaps + ")";
         }
     }
 }

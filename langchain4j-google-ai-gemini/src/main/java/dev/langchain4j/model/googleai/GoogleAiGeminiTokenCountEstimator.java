@@ -85,7 +85,7 @@ public class GoogleAiGeminiTokenCountEstimator implements TokenCountEstimator {
         GeminiCountTokensRequest countTokensRequestWithDummyContent = new GeminiCountTokensRequest();
         countTokensRequestWithDummyContent.setGenerateContentRequest(GeminiGenerateContentRequest.builder()
                 .contents(singletonList(dummyContent))
-                .tools(FunctionMapper.fromToolSepcsToGTool(allTools, false))
+                .tools(FunctionMapper.fromToolSepcsToGTool(allTools, false, false, null, false, false))
                 .build());
 
         // The API doesn't allow us to make a request to count the tokens of the tool specifications only.

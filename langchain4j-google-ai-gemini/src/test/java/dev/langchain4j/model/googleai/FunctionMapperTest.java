@@ -63,7 +63,7 @@ class FunctionMapperTest {
         assertThat(toolSpecification.description()).isEqualTo("Get the distance between the user and the ISS.");
 
         // when
-        GeminiTool geminiTool = FunctionMapper.fromToolSepcsToGTool(toolSpecifications, false);
+        GeminiTool geminiTool = FunctionMapper.fromToolSepcsToGTool(toolSpecifications, false, false, null, false, false);
         System.out.println("\ngeminiTool = " + withoutNullValues(geminiTool.toString()));
 
         // then
@@ -170,7 +170,7 @@ class FunctionMapperTest {
         System.out.println("\ntoolSpecifications = " + toolSpecifications);
 
         // when
-        GeminiTool geminiTool = FunctionMapper.fromToolSepcsToGTool(toolSpecifications, false);
+        GeminiTool geminiTool = FunctionMapper.fromToolSepcsToGTool(toolSpecifications, false, false, null, false, false);
         System.out.println("\ngeminiTool = " + withoutNullValues(geminiTool.toString()));
 
         // then
@@ -237,7 +237,7 @@ class FunctionMapperTest {
         System.out.println("\nspec = " + spec);
 
         // when
-        GeminiTool geminiTool = FunctionMapper.fromToolSepcsToGTool(Arrays.asList(spec), false);
+        GeminiTool geminiTool = FunctionMapper.fromToolSepcsToGTool(Arrays.asList(spec), false, false, null, false, false);
         System.out.println("\ngeminiTool = " + withoutNullValues(geminiTool.toString()));
 
         // then
