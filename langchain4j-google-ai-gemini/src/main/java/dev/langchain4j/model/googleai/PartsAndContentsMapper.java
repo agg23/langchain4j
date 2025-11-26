@@ -182,13 +182,13 @@ class PartsAndContentsMapper {
                     if (Boolean.TRUE.equals(returnThinking)) {
                         thoughts.add(text);
                     } else if (returnThinking == null) { // for backward compatibility
-                        if (!fullText.isEmpty()) {
+                        if (fullText.length() != 0) {
                             fullText.append("\n\n");
                         }
                         fullText.append(text);
                     }
                 } else {
-                    if (!fullText.isEmpty()) {
+                    if (fullText.length() != 0) {
                         fullText.append("\n\n");
                     }
                     fullText.append(text);
