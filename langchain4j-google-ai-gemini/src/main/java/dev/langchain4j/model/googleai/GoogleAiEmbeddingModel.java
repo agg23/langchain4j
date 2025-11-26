@@ -85,8 +85,8 @@ public class GoogleAiEmbeddingModel extends DimensionAwareEmbeddingModel {
             GoogleAiBatchEmbeddingResponse geminiResponse =
                     withRetryMappingExceptions(() -> geminiService.batchEmbed(modelName, batchEmbeddingRequest));
 
-            allEmbeddings.addAll(geminiResponse.embeddings().stream()
-                    .map(values -> Embedding.from(values.values()))
+            allEmbeddings.addAll(geminiResponse.getEmbeddings().stream()
+                    .map(values -> Embedding.from(values.getValues()))
                     .collect(Collectors.toList()));
         }
 
