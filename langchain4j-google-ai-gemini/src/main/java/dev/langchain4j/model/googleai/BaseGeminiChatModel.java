@@ -491,7 +491,7 @@ class BaseGeminiChatModel {
         /**
          * When enabled, the model will return a widget context token in the GroundingMetadata.
          * 
-         * TODO: The full implementation of parsing and exposing the widget context token has not been built.
+         * TODO: The implementation of parsing and exposing the widget context token has not been built.
          * 
          * @see #allowGoogleMaps(Boolean)
          */
